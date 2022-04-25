@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {getTestDetails} from '../../actions/testActions';
 
-function TestDetails({test,getTestDetails}) {
+function TestDetails({test,getTestDetails,user,auth}) {
 
   useEffect(()=>{
     getTestDetails();
@@ -12,28 +12,38 @@ function TestDetails({test,getTestDetails}) {
   const navigate = useNavigate();
 
   const NavigateToTestPage = (e)=>{
+       user.testTaken = true;
        navigate('/test-page/questions')
+  }
+
+
+  if(auth === false){
+    return navigate("/user/login");
   }
 
   return (
     <>
-      <div>
+      <div className='container text-center'>
         <h1>Welcome to Quiz</h1>
-         <ul>
-           <li>Test Name : General Knowledge</li>
-           <li>Duration : 1 hour</li>
-           <li>Total Questions : {test.length}</li>
-         </ul>
+        <ul className='list-group'>
+          <li className='list-group-item mb-2'>Test Name : General Knowledge</li>
+          <li className='list-group-item mb-2'>Duration : 1 hour</li>
+          <li className='list-group-item mb-2'>Total Questions : {test.length}</li>
+        </ul>
         <p>Note : Number of attempts is only limited to 1</p>
 
-        <button type='button' onClick={(e)=>NavigateToTestPage(e)}>Start Test</button>
+        <button type='button' className='btn btn-outline-danger btn-lg' onClick={(e) => NavigateToTestPage(e)}>
+          Start Test
+        </button>
       </div>
     </>
-  )
+  );
 }
 
 const mapStateToProps = (state)=>({
-  test:state.test.test
+  test:state.test.test,
+  user:state.user.user,
+  auth:state.user.auth
 })
 
 export default connect(mapStateToProps,{getTestDetails})(TestDetails)

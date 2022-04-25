@@ -1,50 +1,33 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/userActions";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = ({ loginUser, auth }) => {
-  const [user, setDetails] = useState({
-    email: "",
-    password: "",
-  });
+  const [userId, setUserId] = useState("");
 
   const navigate = useNavigate();
 
-  const onChange = (e) => {
-    setDetails({ ...user, [e.target.name]: e.target.value });
-  };
   const onSubmit = (e) => {
     e.preventDefault();
-    loginUser(user);
+    loginUser(userId);
   };
 
-  if (auth) {
-    return navigate("/");
+  if(auth) {
+    return navigate("/test-details");
   }
   return (
-    <div className='row'>
-      {/* <h4 className='text-center mb-3'>Login</h4> */}
-      <form className='col s8'>
+    <div className='container'>
+      <h4 className='text-center mb-3 display-5'>Login</h4>
+      <form style={custom} className='mx-auto'>
         <div className='row'>
-          <label htmlFor='email'>Email :</label>
           <input
-            type='email'
-            name='email'
-            value={user.email}
-            onChange={(e) => onChange(e)}
-            required
+            type='text'
+            name='userId'
+            value={userId}
+            onChange={(e) => setUserId(e.target.value)}
             className='validate'
-          />
-        </div>
-        <div className='row'>
-          <label htmlFor='password'>Password :</label>
-          <input
-            type='password'
-            name='password'
-            value={user.password}
-            onChange={(e) => onChange(e)}
-            className='validate'
+            placeholder="Login Id"
             required
           />
         </div>
@@ -65,5 +48,10 @@ const Login = ({ loginUser, auth }) => {
 const mapStateToProps = (state) => ({
   auth: state.user.isAuthenticated,
 });
+
+const custom = {
+  width: "300px",
+  height: "auto",
+};
 
 export default connect(mapStateToProps, { loginUser })(Login);

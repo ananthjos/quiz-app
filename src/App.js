@@ -6,11 +6,13 @@ import Login from "./components/user/Login";
 import Home from "./components/layout/Home";
 import TestDetails from "./components/test/TestDetails";
 import TestPage from "./components/test/TestPage";
+import Results from "./components/test/Results";
 import './App.css'
 
 
 function App() {
   return  <Provider store={store}>
+
     <div className='container'>
          <Router>
            <Routes>
@@ -19,6 +21,7 @@ function App() {
              <Route path="/user/register" element={<Register/>}/>
              <Route path="/test-details" element={<TestDetails/>}/>
              <Route path='/test-page/questions' element={<TestPage/>}/>
+             <Route path='/results' element={<Results/>}/>
            </Routes>
          </Router>
       </div>;

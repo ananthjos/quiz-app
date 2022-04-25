@@ -1,20 +1,71 @@
-import React from 'react'
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import { geTotalMcqChoices } from "../../actions/testActions";
 
-function Questions({question}) {
+
+function Questions({ question, geTotalMcqChoices ,choices}) {
+  const [choice, setChoice] = useState("");
   return (
-    <div>
-      <p>
+    <div className='card mb-3'>
+      <p className='card-body'>
         {" "}
         <b>{question.id}</b> {question.question}
       </p>
-      <div>
-        <input type='radio' value={question.option1} id={question.option1} />
-        <input type='radio' value={question.option2} id={question.option2} />
-        <input type='radio' value={question.option3} id={question.option3} />
-        <input type='radio' value={question.option4} id={question.option4} />
+      <div className='form-check'>
+        <div className='mb-2'>
+          <input
+            type='radio'
+            value={question.option1}
+            name={question.option1}
+            onChange={(e) => {
+              setChoice(e.target.value);
+             geTotalMcqChoices(question.id,e.target.value);
+            }}
+          />{" "}
+          {question.option1}
+        </div>
+
+        <div className='mb-2'>
+          <input
+            type='radio'
+            value={question.option2}
+            name={question.option1}
+            onChange={(e) => {setChoice(e.target.value)
+            geTotalMcqChoices(question.id,e.target.value);
+            }}
+            
+          />{" "}
+          {question.option2}
+        </div>
+        <div className='mb-2'>
+          <input
+            type='radio'
+            value={question.option3}
+            name={question.option1}
+            onChange={(e) => {setChoice(e.target.value)
+            geTotalMcqChoices(question.id,e.target.value);
+            }}
+          />{" "}
+          {question.option3}
+        </div>
+        <div className='mb-2'>
+          <input
+            type='radio'
+            value={question.option4}
+            name={question.option1}
+            onChange={(e) => {setChoice(e.target.value)
+            geTotalMcqChoices(question.id,e.target.value);
+            }}
+          />{" "}
+          {question.option4}
+        </div>
       </div>
     </div>
   );
 }
 
-export default Questions
+const mapStateToProps = (state)=>({
+  choices:state.test.choices,
+})
+
+export default connect(mapStateToProps,{ geTotalMcqChoices })(Questions);

@@ -1,7 +1,9 @@
-import { GET_TEST_DETAILS } from "../actions/types";
+import { GET_TEST_DETAILS ,TOTAL_CHOICES,EVALUATE_TEST} from "../actions/types";
 
 const initailState ={
-   test:[]
+   test:[],
+   result :0,
+   choices:[]
 }
 
 export default (state=initailState,action)=>{
@@ -12,6 +14,16 @@ export default (state=initailState,action)=>{
         ...state,
          test:payload
       };
+      case TOTAL_CHOICES:
+        return {
+          ...state,
+          choices:payload
+        }
+        case EVALUATE_TEST :
+          return {
+            ...state,
+            result:payload
+          }
     default:
       return state;
   }

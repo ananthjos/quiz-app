@@ -4,25 +4,20 @@ import { registerUser } from "../../actions/userActions";
 import { Link, useNavigate } from "react-router-dom";
 
 const Register = ({ registerUser, auth }) => {
-  const [user, setDetails] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+  
+  const [userName,setUserName] = useState("");
+  const [email,setEmail] = useState("");
+  const [password,setPassword] = useState("");
 
   const navigate = useNavigate();
 
-  const onChange = (e) => {
-    setDetails({ ...user, [e.target.name]: e.target.value });
-  };
-  const onSubmit = (e) => {
+  const sumbitFormData = (e)=>{
     e.preventDefault();
-    registerUser(user)
-    // customerRegister(user);
-  };
-
-  if (auth) {
-    navigate("/");
+    registerUser({userName:userName})
+  }
+ 
+  if(auth) {
+    navigate("/test-details");
   }
 
   return (
@@ -30,51 +25,58 @@ const Register = ({ registerUser, auth }) => {
       <Link className='btn btn-sm mb-2' to='/'>
         <i className='fas fa-arrow-circle-left fa-2x'></i>
       </Link>
-      <h4 className='text-center mb-3'>SignUp</h4>
-      <form style={custom} className='mx-auto'>
-        <div className='form-group'>
+      <h4 className='text-center mb-3 display-5'>Register</h4>
+      <form
+        style={custom}
+        className='mx-auto'
+        onSubmit={(e) => sumbitFormData(e)}
+      >
+        <div className='row'>
           <label htmlFor='name'>Name :</label>
           <input
             type='text'
             name='name'
-            value={user.name}
-            onChange={(e) => onChange(e)}
-            required
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
             className='form-control form-control-sm '
+            autoComplete='off'
           />
         </div>
-        <div className='form-group'>
+        <div className='row'>
           <label htmlFor='email'>Email :</label>
           <input
             type='email'
             name='email'
-            value={user.email}
-            onChange={(e) => onChange(e)}
-            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          
             className='form-control form-control-sm '
+            autoComplete='off'
           />
         </div>
-        <div className='form-group'>
+        <div className='row'>
           <label htmlFor='password'>Password :</label>
           <input
             type='password'
             name='password'
-            value={user.password}
-            onChange={(e) => onChange(e)}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             className='form-control form-control-sm '
-            required
+            
+            autoComplete='off'
           />
         </div>
-        <button
-          type='submit'
-          onClick={(e) => onSubmit(e)}
-          className='btn btn-outline-primary btn-block btn-sm mt-4'
-        >
-          Register
-        </button>
+        <div className='row'>
+          <button
+            type='submit'
+            className='btn btn-outline-primary btn-block btn-sm mt-4'
+          >
+            Register
+          </button>
+        </div>
       </form>
       <h6 className='text-center mt-3'>
-        <Link to='/customer/login'>
+        <Link to='/user/login'>
           <span>Already registered ? Login</span>{" "}
         </Link>
       </h6>
