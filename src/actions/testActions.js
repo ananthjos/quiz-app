@@ -2,6 +2,8 @@ import { GET_TEST_DETAILS, EVALUATE_TEST, TOTAL_CHOICES } from "./types";
 
 const url = `https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple`;
 
+
+
 export let getMCQOptions = (results) => {
   let options = [];
   let mcq = {};
@@ -23,7 +25,9 @@ export const getTestDetails = () => async (dispatch) => {
   try {
     let response = await fetch(`${url}`);
     let data = await response.json();
+    localStorage.setItem('questions',JSON.stringify(data.results));
     data.results = getMCQOptions(data.results);
+
     dispatch({ type: GET_TEST_DETAILS, payload: data.results });
   } catch (error) {}
 };
@@ -46,16 +50,23 @@ export const geTotalMcqChoices = (questionId, choice) => async (dispatch) => {
 };
 
 export const evaluateTest = (totalChoicesByCandidate) => async (dispatch) => {
-  console.log(totalChoicesByCandidate);
-  let response = await fetch(`${url}`);
-  let data = await response.json();
-
-  let score = 0;
-  for (let i = 0; i < data.results.length; i++) {
-    if (data.results[i].correct_answer === totalChoicesByCandidate[i].answer) {
-      return score++;
-    }
-  }
+  let score = calculateScore(totalChoicesByCandidate);
+ 
   console.log(score);
   dispatch({ type: EVALUATE_TEST, payload: score });
 };
+
+
+function calculateScore(totalChoicesByCandidate) {
+  let response = JSON.parse(localStorage.getItem("questions"));
+  let score = [];
+
+  for (let i = 0; i < totalChoicesByCandidate.length; i++) {
+    score = response.filter(item=>{
+        if(item.correct_answer == totalChoicesByCandidate[i].answer){
+          return item;
+        };
+    });
+  }
+  return score.length;
+}

@@ -12,15 +12,12 @@ function TestDetails({test,getTestDetails,user,auth}) {
   const navigate = useNavigate();
 
   const NavigateToTestPage = (e)=>{
-       user.testTaken = true;
        navigate('/test-page/questions')
   }
-
 
   if(auth === false){
     return navigate("/user/login");
   }
-
   return (
     <>
       <div className='container text-center'>
@@ -40,10 +37,10 @@ function TestDetails({test,getTestDetails,user,auth}) {
   );
 }
 
-const mapStateToProps = (state)=>({
-  test:state.test.test,
-  user:state.user.user,
-  auth:state.user.auth
-})
+const mapStateToProps = (state) => ({
+  test: state.test.test,
+  user: state.user.user,
+  auth: state.user.isAuthenticated,
+});
 
 export default connect(mapStateToProps,{getTestDetails})(TestDetails)

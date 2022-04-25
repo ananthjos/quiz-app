@@ -7,6 +7,7 @@ import Home from "./components/layout/Home";
 import TestDetails from "./components/test/TestDetails";
 import TestPage from "./components/test/TestPage";
 import Results from "./components/test/Results";
+import TestTaken from "./components/test/TestTaken";
 import './App.css'
 
 
@@ -22,6 +23,7 @@ function App() {
              <Route path="/test-details" element={<TestDetails/>}/>
              <Route path='/test-page/questions' element={<TestPage/>}/>
              <Route path='/results' element={<Results/>}/>
+             <Route path='/taken' element={<TestTaken/>}/>
            </Routes>
          </Router>
       </div>;
