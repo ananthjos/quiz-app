@@ -23,6 +23,7 @@ function TestPage({ questions, getTestDetails,evaluateTest ,choices,auth,user}) 
   }
   return (
     <><div className='text-start display-6'>
+      <i className='fa fa-clock text-danger'></i>{" "}
       <Countdown date={Date.now() + 1000*60*60} onComplete={(e)=>onSubmit(e)}></Countdown>
     </div>
       <h5 className='text-center display-5 mb-3'>Questions</h5>
