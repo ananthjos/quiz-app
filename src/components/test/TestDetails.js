@@ -19,7 +19,7 @@ function TestDetails({test,getTestDetails,user,auth}) {
     return navigate("/user/login");
   }
 
-  if(user & user.testTaken === true){
+  if(user.testTaken === true){
     return navigate("/taken");
   }
   return (

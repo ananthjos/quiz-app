@@ -1,8 +1,8 @@
-import { GET_TEST_DETAILS, EVALUATE_TEST, TOTAL_CHOICES } from "./types";
+import { GET_TEST_DETAILS, EVALUATE_TEST, TOTAL_CHOICES ,SAVE_TEST} from "./types";
 
 const url = `https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple`;
 
-
+const url2 = "http://localhost:4000";
 
 export let getMCQOptions = (results) => {
   let options = [];
@@ -70,3 +70,4 @@ function calculateScore(totalChoicesByCandidate) {
   }
   return score.length;
 }
+

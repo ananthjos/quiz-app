@@ -1,4 +1,4 @@
-import {REGISTER_USER,LOGIN_USER,LOGOUT} from './types';
+import {REGISTER_USER,LOGIN_USER,LOGOUT,SAVE_TEST} from './types';
 
 
 
@@ -19,7 +19,6 @@ export const loginUser = (userId) => async (dispatch) => {
  
     let response = await fetch(`${url}/users/${userId}`);
     let data = await response.json();
-
     if(data.id){
       dispatch({ type: LOGIN_USER, payload: data });
     }else{
@@ -27,3 +26,19 @@ export const loginUser = (userId) => async (dispatch) => {
     }
 }; 
 
+// API Call to Save user Test Details
+export const saveTestDetails = (user) => async (dispatch) => {
+  let response = await fetch(`${url}/users/${user.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id: user.id,
+      userName: user.userName,
+      email: user.email,
+      password: user.password,
+      testTaken: user.testTaken,
+    }),
+  });
+}; 

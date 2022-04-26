@@ -3,11 +3,11 @@ import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Questions from './Questions';
 import { getTestDetails ,evaluateTest} from "../../actions/testActions";
-import Countdown from 'react-countdown';
+import { saveTestDetails } from '../../actions/userActions';
 import Pagination from '../layout/Pagination';
 import Navbar from '../layout/Navbar';
 
-function TestPage({ questions, getTestDetails,evaluateTest ,choices,auth,user}) {
+function TestPage({ questions, getTestDetails,evaluateTest ,choices,auth,user,saveTestDetails}) {
   // pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [questionsPerPage] = useState(1);
@@ -21,6 +21,7 @@ function TestPage({ questions, getTestDetails,evaluateTest ,choices,auth,user}) 
   const onSubmit = (e) => {
     evaluateTest(choices);
     user.testTaken = true;
+    saveTestDetails(user)
     navigate("/results");
   };
 
@@ -43,6 +44,10 @@ function TestPage({ questions, getTestDetails,evaluateTest ,choices,auth,user}) 
 
   if (auth === false) {
     return navigate("/user/login");
+  }
+
+  if (user.testTaken === true) {
+    return navigate("/taken");
   }
   return (
     <>
@@ -84,4 +89,4 @@ const mapStateToProps = (state) => ({
   user:state.user.user
 });
 
-export default connect(mapStateToProps, { getTestDetails,evaluateTest })(TestPage);
+export default connect(mapStateToProps, { getTestDetails,evaluateTest ,saveTestDetails})(TestPage);

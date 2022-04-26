@@ -1,4 +1,4 @@
-import { REGISTER_USER, LOGIN_USER } from "../actions/types";
+import { REGISTER_USER, LOGIN_USER,SAVE_TEST } from "../actions/types";
 
 const initailState = {
   user: {},
@@ -20,6 +20,10 @@ export default (state = initailState, action) => {
         user:payload,
         isAuthenticated: true,
       };
+      case SAVE_TEST:
+      return {
+         ...state,
+      }
     default:
       return state;
   }

@@ -5,14 +5,14 @@
       "userName": "jhon",
       "email": "jhon@gmail.com",
       "password": "1234",
-      "testTaken": false
+      "testTaken": true
     },
     {
       "id": 2,
       "userName": "sara",
       "email": "sara@gmail.com",
       "password": "1234",
-      "testTaken": false
+      "testTaken": true
     },
     {
       "id": 3,
@@ -27,6 +27,12 @@
       "email": "william@gmail.com",
       "password": "1234",
       "testTaken": false
+    }
+  ],
+  "testTakers": [
+    {
+      "userId": 1,
+      "id": 1
     }
   ]
 }
