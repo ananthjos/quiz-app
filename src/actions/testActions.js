@@ -1,4 +1,4 @@
-import { GET_TEST_DETAILS, EVALUATE_TEST, TOTAL_CHOICES ,SAVE_TEST} from "./types";
+import { GET_TEST_DETAILS, EVALUATE_TEST, TOTAL_CHOICES} from "./types";
 
 const url = `https://opentdb.com/api.php?amount=10&category=9&difficulty=easy&type=multiple`;
 
@@ -32,6 +32,7 @@ export const getTestDetails = () => async (dispatch) => {
   } catch (error) {}
 };
 
+// to reset questions array data from API
 let totalChoices = [];
 export const geTotalMcqChoices = (questionId, choice) => async (dispatch) => {
   let foundChoice = totalChoices.find((item) => item.id === questionId);
@@ -49,6 +50,7 @@ export const geTotalMcqChoices = (questionId, choice) => async (dispatch) => {
   dispatch({ type: TOTAL_CHOICES, payload: totalChoices });
 };
 
+// method to evaluate test based on user choices
 export const evaluateTest = (totalChoicesByCandidate) => async (dispatch) => {
   let score = calculateScore(totalChoicesByCandidate);
  
