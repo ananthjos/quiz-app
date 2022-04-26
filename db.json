@@ -28,11 +28,5 @@
       "password": "1234",
       "testTaken": false
     }
-  ],
-  "testTakers": [
-    {
-      "userId": 1,
-      "id": 1
-    }
   ]
 }
