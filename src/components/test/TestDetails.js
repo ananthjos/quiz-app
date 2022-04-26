@@ -18,6 +18,10 @@ function TestDetails({test,getTestDetails,user,auth}) {
   if(auth === false){
     return navigate("/user/login");
   }
+
+  if(user & user.testTaken === true){
+    return navigate("/taken");
+  }
   return (
     <>
       <div className='container text-center'>

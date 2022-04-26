@@ -1,40 +1,69 @@
-import React,{useEffect} from 'react';
+import React,{useEffect,useState} from 'react';
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Questions from './Questions';
 import { getTestDetails ,evaluateTest} from "../../actions/testActions";
 import Countdown from 'react-countdown';
+import Pagination from '../layout/Pagination';
+import Navbar from '../layout/Navbar';
 
 function TestPage({ questions, getTestDetails,evaluateTest ,choices,auth,user}) {
+  // pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [questionsPerPage] = useState(1);
+
   useEffect(() => {
     getTestDetails();
   }, []);
 
   const navigate = useNavigate();
 
-  const onSubmit = (e)=>{
-     evaluateTest(choices);
-     user.testTaken = true;
-     navigate('/results');
-  }
+  const onSubmit = (e) => {
+    evaluateTest(choices);
+    user.testTaken = true;
+    navigate("/results");
+  };
 
-  if(auth === false){
-    return navigate("/user/login")
+  // Get current question
+  const indexOfLastQuestion = currentPage * questionsPerPage;
+  const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
+  const currentQuestions = questions.slice(
+    indexOfFirstQuestion,
+    indexOfLastQuestion
+  );
+
+  console.log(currentQuestions);
+
+  // Change page
+  const paginate = (pageNumber) => {
+    if (pageNumber > 0 && pageNumber <= 10) {
+      setCurrentPage(pageNumber);
+    }
+  };
+
+  if (auth === false) {
+    return navigate("/user/login");
   }
   return (
-    <><div className='text-start display-6'>
-      <i className='fa fa-clock text-danger'></i>{" "}
-      <Countdown date={Date.now() + 1000*60*60} onComplete={(e)=>onSubmit(e)}></Countdown>
-    </div>
+    <>
+      <Navbar/>
       <h5 className='text-center display-5 mb-3'>Questions</h5>
       <div className='text-end mb-3'>
         <button className='btn btn-outline-danger' onClick={(e) => onSubmit(e)}>
           End Test
         </button>
       </div>
-      {questions.map((question) => {
-        return <Questions key={question.id} question={question} />;
+      {currentQuestions.map((question)=>{
+        return <Questions  key={question.id} question={question} />;
       })}
+      
+
+      <Pagination
+        questionsPerPage={questionsPerPage}
+        totalQuestions={questions.length}
+        paginate={paginate}
+        currentPage={currentPage}
+      />
 
       <div className='text-center'>
         <button
